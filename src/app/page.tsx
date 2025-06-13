@@ -4,6 +4,7 @@ import { useState } from 'react';
 import CodeEditor from '../components/CodeEditor';
 import FileUpload from '../components/FileUpload';
 import Visualization from '../components/Visualization';
+import { useRouter } from 'next/navigation';
 
 const API_URL = 'http://localhost:8080/api/visualize';
 
@@ -12,6 +13,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [visualizationUrl, setVisualizationUrl] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const router = useRouter();
 
   const handleVisualize = async () => {
     if (!code.trim()) {
@@ -55,6 +57,14 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
           Backtracking Algorithm Visualizer
         </h1>
+        <div className="flex justify-center mb-8">
+          <button
+            onClick={() => router.push('/permutation-trace-demo')}
+            className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+          >
+            Try Permutation Example
+          </button>
+        </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-6">
