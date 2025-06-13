@@ -5,20 +5,24 @@ import CodeEditor from '../components/CodeEditor';
 import FileUpload from '../components/FileUpload';
 import Visualization from '../components/Visualization';
 
+const API_URL = 'http://localhost:8080/api/visualize';
+
 export default function Home() {
   const [code, setCode] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [visualizationUrl, setVisualizationUrl] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const handleVisualize = async () => {
     if (!code.trim()) {
-      alert('Please enter or upload Java code first');
+      setError('Please enter or upload Java code first');
       return;
     }
 
     setIsLoading(true);
+    setError('');
     try {
-      const response = await fetch('/api/visualize', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,14 +31,19 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate visualization');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to generate visualization');
       }
 
       const data = await response.json();
-      setVisualizationUrl(data.visualizationUrl);
+      if (data.visualizationUrl) {
+        setVisualizationUrl(data.visualizationUrl);
+      } else {
+        throw new Error('No visualization URL in response');
+      }
     } catch (error) {
       console.error('Error:', error);
-      alert('Failed to generate visualization. Please check your code and try again.');
+      setError(error instanceof Error ? error.message : 'Failed to generate visualization');
     } finally {
       setIsLoading(false);
     }
@@ -54,6 +63,12 @@ export default function Home() {
               <CodeEditor value={code} onChange={setCode} />
               <FileUpload onFileUpload={setCode} />
             </div>
+            
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                {error}
+              </div>
+            )}
             
             <button
               onClick={handleVisualize}

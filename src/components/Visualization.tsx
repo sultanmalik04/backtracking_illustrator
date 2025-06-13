@@ -25,13 +25,34 @@ const Visualization: React.FC<VisualizationProps> = ({ url, isLoading }) => {
     );
   }
 
+  // Extract the base64 data from the URL if it's wrapped in a CSS background-image
+  const getSvgData = (url: string) => {
+    if (url.includes('background-image: url(')) {
+      const match = url.match(/url\("(.*)"\)/);
+      return match ? match[1] : url;
+    }
+    return url;
+  };
+
+  const svgData = getSvgData(url);
+  console.log(svgData);
+
   return (
     <div className="h-[400px] flex items-center justify-center bg-gray-50 rounded-lg overflow-hidden">
-      <img
-        src={url}
-        alt="Backtracking visualization"
-        className="max-w-full max-h-full object-contain"
-      />
+      {svgData.startsWith('data:image/svg+xml') ? (
+        <div 
+          className="max-w-full max-h-full"
+          dangerouslySetInnerHTML={{ 
+            __html: decodeURIComponent(atob(svgData.split(',')[1]))
+          }}
+        />
+      ) : (
+        <img
+          src={svgData}
+          alt="Backtracking visualization"
+          className="max-w-full max-h-full object-contain"
+        />
+      )}
     </div>
   );
 };
