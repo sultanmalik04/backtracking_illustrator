@@ -20,7 +20,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ value, onChange }) => {
       <Editor
         height="100%"
         defaultLanguage="java"
-        theme="vs-light"
+        theme="vs-dark"
         value={value}
         onChange={(value) => onChange(value || '')}
         onMount={handleEditorDidMount}

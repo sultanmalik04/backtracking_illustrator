@@ -1,6 +1,7 @@
 package com.backtracking.visualizer.service;
 
 import com.backtracking.visualizer.dto.TraceStep;
+import com.backtracking.visualizer.dto.StackFrame;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
@@ -22,6 +23,7 @@ public class PermutationTraceService {
             stepCounter++,
             "permute",
             Map.of("nums", Arrays.copyOf(nums, nums.length), "start", start),
+            new ArrayList<>(),
             -1,
             "recurse",
             "Entering recursion with start=" + start + ", nums=" + Arrays.toString(nums)
@@ -33,6 +35,7 @@ public class PermutationTraceService {
                 stepCounter++,
                 "permute",
                 Map.of("nums", Arrays.copyOf(nums, nums.length), "start", start),
+                new ArrayList<>(),
                 -1,
                 "base_case",
                 "Base case reached: " + Arrays.toString(nums)
@@ -46,6 +49,7 @@ public class PermutationTraceService {
                 stepCounter++,
                 "permute",
                 Map.of("nums", Arrays.copyOf(nums, nums.length), "start", start, "i", i),
+                new ArrayList<>(),
                 -1,
                 "swap",
                 "Swapping nums[" + start + "] and nums[" + i + "]"
@@ -59,6 +63,7 @@ public class PermutationTraceService {
                 stepCounter++,
                 "permute",
                 Map.of("nums", Arrays.copyOf(nums, nums.length), "start", start, "i", i),
+                new ArrayList<>(),
                 -1,
                 "backtrack",
                 "Backtracking (swapping back) nums[" + start + "] and nums[" + i + "]"

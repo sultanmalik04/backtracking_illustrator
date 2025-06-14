@@ -5,6 +5,7 @@ import CodeEditor from '../components/CodeEditor';
 import FileUpload from '../components/FileUpload';
 import Visualization from '../components/Visualization';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const API_URL = 'http://localhost:8080/api/visualize';
 
@@ -58,12 +59,9 @@ export default function Home() {
           Backtracking Algorithm Visualizer
         </h1>
         <div className="flex justify-center mb-8">
-          <button
-            onClick={() => router.push('/permutation-trace-demo')}
-            className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
-          >
+          <Link href="/permutation-trace-demo" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200">
             Try Permutation Example
-          </button>
+          </Link>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -93,6 +91,12 @@ export default function Home() {
             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Visualization</h2>
             <Visualization url={visualizationUrl} isLoading={isLoading} />
           </div>
+        </div>
+
+        <div className="w-full text-center mt-8">
+          <Link href="/generic-trace-demo" className="px-6 py-3 bg-green-500 text-white rounded-lg text-xl font-semibold hover:bg-green-600 transition duration-200 shadow-lg">
+            Try Generic Trace Demo
+          </Link>
         </div>
       </div>
     </main>

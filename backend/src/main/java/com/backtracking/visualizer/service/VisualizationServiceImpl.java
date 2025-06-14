@@ -9,13 +9,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VisualizationServiceImpl implements VisualizationService {
 
-    private final CodeAnalysisService codeAnalysisService;
+    private final CodeTraceGeneratorService codeTraceGeneratorService;
     private final GraphVizService graphVizService;
 
     @Override
     public String generateVisualization(String code) throws Exception {
-        // Analyze the code
-        List<BacktrackingNode> nodes = codeAnalysisService.analyzeCode(code);
+        // Analyze the code for static graph generation using the new service
+        List<BacktrackingNode> nodes = codeTraceGeneratorService.analyzeCodeForStaticGraph(code);
         
         // Generate visualization using GraphViz
         return graphVizService.generateVisualization(nodes);

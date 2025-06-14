@@ -31,8 +31,8 @@ A web application that helps visualize backtracking algorithms written in Java. 
    ```
 
 3. Start the development server:
-   ```bash
-   npm run dev
+```bash
+npm run dev
    ```
 
 The frontend will be available at `http://localhost:3000`

@@ -1,8 +1,8 @@
 package com.backtracking.visualizer.dto;
 
 import lombok.Data;
- 
+
 @Data
-public class VisualizationRequest {
+public class GenericTraceRequest {
     private String code;
 } 
